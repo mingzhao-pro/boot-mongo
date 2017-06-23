@@ -1,0 +1,27 @@
+version: "2"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - webnet
+  
+  web:
+    image: example:latest
+    links: 
+      - mongo:mongo
+    ports: 
+      - "8080:8080"
+    networks:
+      - webnet
+    environment: 
+     - SPRING_DATA_MONGO_USERNAME=jsmith 
+     - SPRING_DATA_MONGO_PASSWORD=sqy2017
+     - SPRING_DATA_MONGO_HOST=mongo
+     - SPRING_DATA_MONGO_AUTHENTICATION_DATABASE=test
+
+
+networks:
+  webnet:
